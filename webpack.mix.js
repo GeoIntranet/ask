@@ -1,5 +1,5 @@
-let mix = require('laravel-mix');
-
+const { mix } = require('laravel-mix');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,5 +11,12 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.js('resources/assets/js/app.js', 'public/js').version()
+    .sass('resources/assets/sass/app.scss', 'public/css').version()
+;
+
+mix.webpackConfig({
+    plugins: [
+        new CleanWebpackPlugin(['./public/js', './public/css', './public/fonts'])
+    ]
+});

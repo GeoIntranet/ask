@@ -12,5 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('ask');
 });
+
+Route::get('/question','AskController@index')->name('ask');
+Route::any('/recherche','AskController@ask')->name('recherche');
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
