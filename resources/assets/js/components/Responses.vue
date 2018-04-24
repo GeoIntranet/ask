@@ -1,5 +1,6 @@
 <template>
     <div style="margin-bottom: 50px">
+
         <div v-for="information in all" class="row border p-1" >
             <div class="col-8">
                 <br>
@@ -20,17 +21,23 @@
         data () {
             return {
                 data : [],
+                original : [],
                 count : null,
                 all : [],
             }
         },
         mounted() {
+            Event.$on('reset',(data)=>{
+                console.log('test')
+                this.all = this.original;
+            })
             Event.$on('responses',(data)=>{
                 this.all = data.data ;
             })
 
             axios.get('/its').then((response)=>{
                 this.all = response.data ;
+                this.original = response.data ;
             }).catch((error)=>{
             });
         },

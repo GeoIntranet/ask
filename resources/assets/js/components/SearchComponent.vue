@@ -1,10 +1,17 @@
 <template>
-    <input
-            v-model="search"
-            style="width: 50%; height: 60px;border:none;box-shadow: none; border-radius:4px;"
-            class="p-3" type="text" name="search" placeholder="Une question ?"
-            @keyup="autocomplete"
-    >
+    <div class="p-0">
+        <input
+                autocomplete="off"
+                autofocus
+                v-model="search"
+                style="width: 60%; height: 60px;border:none;box-shadow: none; border-radius:1px;"
+                class="p-3" type="text" name="search" placeholder="Une question ?"
+                @keyup="autocomplete"
+                @keyup.esc="reset"
+        >
+
+    </div>
+
 </template>
 
 <script>
@@ -24,6 +31,11 @@
             });
         },
         methods:{
+            reset(){
+              this.data=[];
+              this.search="";
+               Event.$emit('resetResponses','test');
+            },
             loadResponses(data){
                Event.$emit('responses',data)
             },

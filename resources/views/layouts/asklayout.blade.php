@@ -15,6 +15,11 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <style>
+        *:focus {
+            outline: none;
+        }
+    </style>
 </head>
 <body style="background-color: #ededed;">
 <div id="app">

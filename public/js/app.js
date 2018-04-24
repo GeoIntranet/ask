@@ -1679,11 +1679,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             data: [],
+            original: [],
             count: null,
             all: []
         };
@@ -1691,12 +1693,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this = this;
 
+        Event.$on('reset', function (data) {
+            console.log('test');
+            _this.all = _this.original;
+        });
         Event.$on('responses', function (data) {
             _this.all = data.data;
         });
 
         axios.get('/its').then(function (response) {
             _this.all = response.data;
+            _this.original = response.data;
         }).catch(function (error) {});
     },
 
@@ -1710,6 +1717,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1738,6 +1752,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        reset: function reset() {
+            this.data = [];
+            this.search = "";
+            Event.$emit('resetResponses', 'test');
+        },
         loadResponses: function loadResponses(data) {
             Event.$emit('responses', data);
         },
@@ -37562,35 +37581,54 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("input", {
-    directives: [
-      {
-        name: "model",
-        rawName: "v-model",
-        value: _vm.search,
-        expression: "search"
-      }
-    ],
-    staticClass: "p-3",
-    staticStyle: {
-      width: "50%",
-      height: "60px",
-      border: "none",
-      "box-shadow": "none",
-      "border-radius": "4px"
-    },
-    attrs: { type: "text", name: "search", placeholder: "Une question ?" },
-    domProps: { value: _vm.search },
-    on: {
-      keyup: _vm.autocomplete,
-      input: function($event) {
-        if ($event.target.composing) {
-          return
+  return _c("div", { staticClass: "p-0" }, [
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.search,
+          expression: "search"
         }
-        _vm.search = $event.target.value
+      ],
+      staticClass: "p-3",
+      staticStyle: {
+        width: "60%",
+        height: "60px",
+        border: "none",
+        "box-shadow": "none",
+        "border-radius": "1px"
+      },
+      attrs: {
+        autocomplete: "off",
+        autofocus: "",
+        type: "text",
+        name: "search",
+        placeholder: "Une question ?"
+      },
+      domProps: { value: _vm.search },
+      on: {
+        keyup: [
+          _vm.autocomplete,
+          function($event) {
+            if (
+              !("button" in $event) &&
+              _vm._k($event.keyCode, "esc", 27, $event.key, "Escape")
+            ) {
+              return null
+            }
+            return _vm.reset($event)
+          }
+        ],
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.search = $event.target.value
+        }
       }
-    }
-  })
+    })
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
