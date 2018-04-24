@@ -23,7 +23,9 @@ class AskController extends Controller
         $array = preg_split('/\s+/', request('search'));
 
         $information = Informations::whereNotNull('titre');
-        $information = $information->where('titre','LIKE','%'.request('search').'%')->orderBy('lastact','DESC')->limit(0)->take(50)->get();
+        $information = $information->where('titre','LIKE','%'.request('search').'%');
+        $information = $information->orWhere('explic','LIKE','%'.request('search').'%');
+         $information = $information->orderBy('lastact','DESC') ->limit(0)->take(50)->get();
 
          $information_['count'] = $information->count();
          $information_['data'] = $information;
