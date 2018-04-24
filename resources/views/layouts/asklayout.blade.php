@@ -16,9 +16,9 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body style="background-color: #ededed;">
 <div id="app">
-    <main class="" style="background-color: #ededed;">
+    <main class="" >
         @yield('navbar')
         @yield('content')
     </main>

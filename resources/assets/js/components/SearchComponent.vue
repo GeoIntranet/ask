@@ -12,17 +12,27 @@
         data () {
             return {
                 search : '',
+                data : [],
+                count : null,
+                all : [],
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            axios.get('/its').then((response)=>{
+                this.all = response.data ;
+            }).catch((error)=>{
+            });
         },
         methods:{
+            loadResponses(data){
+               Event.$emit('responses',data)
+            },
             autocomplete(){
                 if(this.search.length >= 2 ){
+                    const vm = this;
                     axios.post('/recherche',{search:this.search
-                    }).then((response)=>{
-
+                    }).then(function (response) {
+                        vm.loadResponses(response.data)
                     }).catch((error)=>{
 
                     });
@@ -30,6 +40,7 @@
                 else{
                     //Event.$emit('closeSearch', this.search)
                 }
+
             },
             searching(){
 

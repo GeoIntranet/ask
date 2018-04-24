@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Informations;
 use App\Responses;
 use Illuminate\Http\Request;
 
@@ -14,13 +15,25 @@ class AskController extends Controller
      */
     public function index()
     {
-       return view('ask')->with('responses',Responses::all());
+        return view('ask')->with('responses',Informations::all());
     }
 
     public function ask()
     {
-        var_dump(request('search'));
-        die();
+        $array = preg_split('/\s+/', request('search'));
+
+        $information = Informations::whereNotNull('titre');
+        $information = $information->where('titre','LIKE','%'.request('search').'%')->get();
+
+         $information_['count'] = $information->count();
+         $information_['data'] = $information;
+
+         return $information_;
+    }
+
+    public function it()
+    {
+        return Informations::all();
     }
 
     /**

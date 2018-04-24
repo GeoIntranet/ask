@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/question','AskController@index')->name('ask');
+Route::get('/its','AskController@it')->name('it');
 Route::any('/recherche','AskController@ask')->name('recherche');
 
 
