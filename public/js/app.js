@@ -1633,6 +1633,37 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/BackTop.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            count: null
+        };
+    },
+    mounted: function mounted() {},
+
+    methods: {
+        backToTop: function backToTop() {
+            $('html,body').stop().animate({
+                scrollTop: 0
+            }, 'slow', 'swing');
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Count.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1676,10 +1707,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -1707,6 +1734,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }).catch(function (error) {});
     },
 
+    filters: {
+        purify: function purify(str) {
+            if (str === null || str === '') return false;else str = str.toString();
+            return str.replace(/<[^>]*>/g, '').substr(0, 350);
+        }
+    },
     methods: {}
 });
 
@@ -37513,35 +37546,21 @@ var render = function() {
     "div",
     { staticStyle: { "margin-bottom": "50px" } },
     _vm._l(_vm.all, function(information) {
-      return _c("div", { staticClass: "row border p-1" }, [
-        _c("div", { staticClass: "col-8" }, [
+      return _c("div", { staticClass: "row response-body p-1" }, [
+        _c("div", { staticClass: "col-lg-12 body" }, [
           _c("br"),
           _vm._v(" "),
-          _c("h4", [_vm._v("# " + _vm._s(information.titre))]),
+          _c("h4", [_c("b", [_vm._v("# " + _vm._s(information.titre))])]),
           _vm._v(" "),
-          _c("p", { domProps: { innerHTML: _vm._s(information.explic) } })
-        ]),
-        _vm._v(" "),
-        _vm._m(0, true)
+          _c("p", [
+            _vm._v(" " + _vm._s(_vm._f("purify")(information.explic)) + " ...")
+          ])
+        ])
       ])
     })
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-4 text-right " }, [
-      _c("br"),
-      _vm._v(" "),
-      _c("i", {
-        staticClass: "fa fa-search",
-        staticStyle: { color: "lightgray" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -37637,6 +37656,29 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-add0f0e4", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-eed73272\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/BackTop.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "goTop", on: { click: _vm.backToTop } }, [
+    _c("i", { staticClass: "fa fa-angle-up", attrs: { "aria-hidden": "true" } })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-eed73272", module.exports)
   }
 }
 
@@ -48705,6 +48747,7 @@ Vue.component('multiselect', __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___defau
 Vue.component('search', __webpack_require__("./resources/assets/js/components/SearchComponent.vue"));
 Vue.component('responses', __webpack_require__("./resources/assets/js/components/Responses.vue"));
 Vue.component('count', __webpack_require__("./resources/assets/js/components/Count.vue"));
+Vue.component('back-top', __webpack_require__("./resources/assets/js/components/BackTop.vue"));
 
 var app = new Vue({
   el: '#app'
@@ -48771,6 +48814,54 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/BackTop.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/BackTop.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-eed73272\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/BackTop.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\BackTop.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-eed73272", Component.options)
+  } else {
+    hotAPI.reload("data-v-eed73272", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
 
 /***/ }),
 

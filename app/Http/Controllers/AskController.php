@@ -15,7 +15,7 @@ class AskController extends Controller
      */
     public function index()
     {
-        return view('ask')->with('responses',Informations::all());
+        return view('ask')->with('responses',Informations::orderBy('lastact','DESC')->get());
     }
 
     public function ask()
@@ -23,7 +23,7 @@ class AskController extends Controller
         $array = preg_split('/\s+/', request('search'));
 
         $information = Informations::whereNotNull('titre');
-        $information = $information->where('titre','LIKE','%'.request('search').'%')->get();
+        $information = $information->where('titre','LIKE','%'.request('search').'%')->orderBy('lastact','DESC')->get();
 
          $information_['count'] = $information->count();
          $information_['data'] = $information;
@@ -33,7 +33,7 @@ class AskController extends Controller
 
     public function it()
     {
-        return Informations::all();
+        return Informations::orderBy('lastact','DESC')->get();
     }
 
     /**

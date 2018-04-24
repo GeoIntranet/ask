@@ -3053,6 +3053,43 @@
   clip: auto;
 }
 
+.response-body {
+  border-bottom: solid 1px #dee2e6;
+}
+
+.response-body .body h4 {
+  color: #404040;
+}
+
+.response-body:hover {
+  cursor: pointer;
+  color: white;
+  background-color: #1d949b;
+  -webkit-transition: background-color 0.5s;
+  transition: background-color 0.5s;
+}
+
+.response-body:hover .body h4 {
+  color: white;
+  text-decoration: underline;
+}
+
+.goTop {
+  cursor: pointer;
+  background-color: #1d949b;
+  padding: 10px 15px 10px 15px;
+  color: white;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.goTop:hover {
+  background-color: #0d4245;
+  -webkit-transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease;
+}
+
 /*!
  * Bootstrap v4.1.0 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors

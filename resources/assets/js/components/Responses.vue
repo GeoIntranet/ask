@@ -1,15 +1,11 @@
 <template>
     <div style="margin-bottom: 50px">
 
-        <div v-for="information in all" class="row border p-1" >
-            <div class="col-8">
+        <div v-for="information in all" class="row response-body p-1" >
+            <div class="col-lg-12 body">
                 <br>
-                <h4># {{information.titre}}</h4>
-                <p v-html="information.explic"> </p>
-            </div>
-            <div class="col-4 text-right ">
-                <br>
-                <i class="fa fa-search" style="color:lightgray"> </i>
+                <h4> <b># {{information.titre}}</b></h4>
+                <p> {{information.explic | purify}} ...</p>
             </div>
         </div>
     </div>
@@ -41,7 +37,18 @@
             }).catch((error)=>{
             });
         },
+        filters: {
+            purify(str)
+            {
+                if ((str===null) || (str===''))
+                    return false;
+                else
+                    str = str.toString();
+                return str.replace(/<[^>]*>/g, '').substr(0, 350);
+            }
+        },
         methods:{
+
         }
     }
 </script>

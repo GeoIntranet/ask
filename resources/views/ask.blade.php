@@ -11,23 +11,24 @@
 box-shadow: inset 0px -26px 100px 0px rgba(0,0,0,0.38);">
             <div class="row">
                 <div class="col-lg-12" style="background-color: black;opacity: 0.35;color: white;height: 50px; ">
-
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-11" style="color:white;margin-top: -40px;font-weight: bolder">
                     <img src="http://ask.local/imgs/logo_euro.png" alt="logo"> <b>E</b><i>uro</i><b>COMPUTER</b>
                 </div>
-                <div class="col-lg-1 text-right" style="color:white;margin-top: -40px;font-weight: bolder"><i class="fa fa-commenting-o fa-2x" > </i></div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-12 p-4"
+                <div class="col-12 p-4 d-inlne-block"
                      style=" text-align: center;  color: #fff; min-height: 400px;  font-size: 1.5em; "
                 >
                     <br><br>
-                    <h1 style="font-size: 3em; font-weight: bolder">
-                        <span style="font-weight: lighter;">#</span> Ask <span style="font-weight: lighter">me</span>
-                    </h1>
+                    <span style="font-size: 3em; font-weight: bolder ; display: inline-block">
+                        <span style="font-weight: lighter;">#</span> Ask <span style="font-weight: lighter">me ... </span>
+                    </span>
+                    <span class="d-inlne-block ml-4" >
+                        <i class="fa fa-comment fa-3x "> </i>
+                    </span>
                     <search></search>
                 </div>
             </div>
@@ -45,4 +46,6 @@ box-shadow: 3px 0px 31px 0px rgba(0,0,0,0.25);">
         <responses></responses>
 
     </div>
+
+    <back-top></back-top>
 @endsection

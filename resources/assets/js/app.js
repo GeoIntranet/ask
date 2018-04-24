@@ -23,6 +23,7 @@ Vue.component('multiselect', Multiselect)
 Vue.component('search', require('./components/SearchComponent'));
 Vue.component('responses', require('./components/Responses'));
 Vue.component('count', require('./components/Count'));
+Vue.component('back-top', require('./components/BackTop'));
 
 
 const app = new Vue({
