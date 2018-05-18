@@ -15,12 +15,15 @@ box-shadow: inset 0px -26px 100px 0px rgba(0,0,0,0.38);">
             </div>
             <div class="row">
                 <div class="col-lg-11" style="color:white;margin-top: -40px;font-weight: bolder">
-                    <img src="http://ask.local/imgs/logo_euro.png" alt="logo"> <b>E</b><i>uro</i><b>COMPUTER</b>
+                    <a href="/question" style="color: white">
+                        <img src="http://ask.local/imgs/logo_euro.png" alt="logo"> <b>E</b><i>uro</i><b>COMPUTER</b>
+                    </a>
+
                 </div>
 
                 @auth()
                     <div class="col-lg-1 text-right" style="color:white;margin-top: -35px;font-weight: bolder">
-                        <a href="{{route('post.create')}}"><i class="fa fa-plus" style="color:white"> </i></a>
+                        <a href="/add"><i class="fa fa-plus" style="color:white"> </i></a>
                     </div>
                 @endauth
             </div>
@@ -35,7 +38,6 @@ box-shadow: inset 0px -26px 100px 0px rgba(0,0,0,0.38);">
                     <span class="d-inlne-block ml-4" >
                         <i class="fa fa-comment fa-3x "> </i>
                     </span>
-                    <search></search>
                 </div>
             </div>
         </div>
@@ -46,11 +48,39 @@ box-shadow: inset 0px -26px 100px 0px rgba(0,0,0,0.38);">
 
     <div
             class="container"
-            style="margin-top:-20px ;background-color: white; -webkit-box-shadow: 3px 0px 31px 0px rgba(0,0,0,0.25);
--moz-box-shadow: 3px 0px 31px 0px rgba(0,0,0,0.25);
-box-shadow: 3px 0px 31px 0px rgba(0,0,0,0.25);">
-        <responses :loaded="{{$responses}}"></responses>
+            style="
+            margin-top:-150px ;
+            background-color: white;
+            -webkit-box-shadow: 3px 0px 31px 0px rgba(0,0,0,0.25);
+            -moz-box-shadow: 3px 0px 31px 0px rgba(0,0,0,0.25);
+            box-shadow: 3px 0px 31px 0px rgba(0,0,0,0.25);
+            ">
 
+        <form action="/post" method="post">
+            <br>
+           {{csrf_field()}}
+            <div class="row">
+                <div class="col-lg-12">
+                    <input class="form-control" autofocus type="text" name="title" placeholder="Titre du post" required>
+                    <br>
+                    <textarea placeholder="Explication de la note technique" class="form-control" name="content" id="" cols="30" rows="10" required></textarea>
+                </div>
+            </div>
+
+
+
+
+            <br>
+            <div class="row">
+                <div class="col-lg-12 text-right">
+                    <input type="submit" value="Ajouté" class="btn btn-primary ">
+                    <br>
+                    <br>
+                </div>
+            </div>
+
+
+        </form>
     </div>
 
     <back-top></back-top>

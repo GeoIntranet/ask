@@ -6,8 +6,9 @@
                 v-model="search"
                 style="width: 60%; height: 60px;border:none;box-shadow: none; border-radius:1px;"
                 class="p-3" type="text" name="search" placeholder="Une question ?"
-                @keyup="autocomplete"
                 @keyup.esc="reset"
+                @keyup.del="autocomplete"
+                @keyup="autocomplete"
         >
 
     </div>
@@ -34,7 +35,7 @@
             reset(){
               this.data=[];
               this.search="";
-               Event.$emit('resetResponses','test');
+               Event.$emit('reset');
             },
             loadResponses(data){
                Event.$emit('responses',data)
@@ -50,17 +51,14 @@
                     });
                 }
                 else{
-                    //Event.$emit('closeSearch', this.search)
+                    Event.$emit('reset')
                 }
 
             },
             searching(){
-
                 axios.post('/recherche',{search:this.search
                 }).then((response)=>{
-
                 }).catch((error)=>{
-
                 });
             },
         }

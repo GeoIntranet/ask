@@ -23,3 +23,8 @@ Route::any('/recherche','AskController@ask')->name('recherche');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/post/{id}/delete', 'PostController@destroy')->middleware('auth')->name('post.destroy');
+Route::resource('post', 'PostController');
+
+
+Route::get('/home', 'HomeController@index')->name('home');

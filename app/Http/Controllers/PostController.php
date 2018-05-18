@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Informations;
 use App\Posts;
-use App\Responses;
 use Illuminate\Http\Request;
 
-class AskController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,28 +14,7 @@ class AskController extends Controller
      */
     public function index()
     {
-        return view('ask')
-            ->with('responses',Posts::orderBy('created_at','DESC')->limit(0)->take(50)->get());
-    }
-
-    public function ask()
-    {
-        $array = preg_split('/\s+/', request('search'));
-
-        $information = Posts::whereNotNull('title');
-        $information = $information->where('title','LIKE','%'.request('search').'%');
-        $information = $information->orWhere('content','LIKE','%'.request('search').'%');
-         $information = $information->orderBy('created_at','DESC') ->limit(0)->take(50)->get();
-
-         $information_['count'] = $information->count();
-         $information_['data'] = $information;
-
-         return $information_;
-    }
-
-    public function it()
-    {
-        return Posts::orderBy('created_at','DESC')->limit(0)->take(50)->get();
+        return view('add');
     }
 
     /**
@@ -47,7 +24,7 @@ class AskController extends Controller
      */
     public function create()
     {
-        //
+        return view('add');
     }
 
     /**
@@ -58,7 +35,14 @@ class AskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Posts::create([
+            'title' => request('title'),
+            'content' => request('content'),
+            'user_id' => auth()->user()->id,
+            'visible' => 1,
+        ]);
+
+        return redirect('/question');
     }
 
     /**
@@ -80,7 +64,7 @@ class AskController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('edit')->with('post',Posts::find($id));
     }
 
     /**
@@ -92,7 +76,11 @@ class AskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Posts::find($id)->update([
+            'title' => request('title'),
+            'content' => request('content'),
+        ]);
+     return redirect('/question');
     }
 
     /**
@@ -103,6 +91,8 @@ class AskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Posts::find($id)->delete();
+
+        return redirect('/question');
     }
 }

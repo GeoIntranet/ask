@@ -1707,6 +1707,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -1717,21 +1726,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             all: []
         };
     },
+
+    props: ['loaded'],
     mounted: function mounted() {
         var _this = this;
 
+        this.original = this.loaded;
+        this.data = this.loaded;
+        this.all = this.loaded;
+
         Event.$on('reset', function (data) {
-            console.log('test');
             _this.all = _this.original;
         });
+
         Event.$on('responses', function (data) {
             _this.all = data.data;
         });
-
-        axios.get('/its').then(function (response) {
-            _this.all = response.data;
-            _this.original = response.data;
-        }).catch(function (error) {});
     },
 
     filters: {
@@ -1740,7 +1750,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return str.replace(/<[^>]*>/g, '').substr(0, 350);
         }
     },
-    methods: {}
+    methods: {
+        mypost: function mypost(post) {
+            if (post.user_id == Laravel.user) {
+                return true;
+            }
+            return false;
+        },
+        deleteProduct: function deleteProduct(information) {
+            return '/post/' + information.id + '/delete';
+        },
+        editPost: function editPost(information) {
+            return '/post/' + information.id + '/edit';
+        }
+    }
 });
 
 /***/ }),
@@ -1750,6 +1773,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -1788,7 +1812,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         reset: function reset() {
             this.data = [];
             this.search = "";
-            Event.$emit('resetResponses', 'test');
+            Event.$emit('reset');
         },
         loadResponses: function loadResponses(data) {
             Event.$emit('responses', data);
@@ -1801,11 +1825,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     vm.loadResponses(response.data);
                 }).catch(function (error) {});
             } else {
-                //Event.$emit('closeSearch', this.search)
+                Event.$emit('reset');
             }
         },
         searching: function searching() {
-
             axios.post('/recherche', { search: this.search
             }).then(function (response) {}).catch(function (error) {});
         }
@@ -37550,11 +37573,33 @@ var render = function() {
         _c("div", { staticClass: "col-lg-12 body" }, [
           _c("br"),
           _vm._v(" "),
-          _c("h4", [_c("b", [_vm._v("# " + _vm._s(information.titre))])]),
+          _c("h4", [_c("b", [_vm._v("# " + _vm._s(information.title))])]),
           _vm._v(" "),
           _c("p", [
-            _vm._v(" " + _vm._s(_vm._f("purify")(information.explic)) + " ...")
-          ])
+            _vm._v(" " + _vm._s(_vm._f("purify")(information.content)) + " ...")
+          ]),
+          _vm._v(" "),
+          _vm.mypost(information)
+            ? _c("p", { staticClass: "text-right" }, [
+                _c(
+                  "a",
+                  {
+                    staticStyle: { color: "white" },
+                    attrs: { href: _vm.editPost(information) }
+                  },
+                  [_c("i", { staticClass: "fa fa-pencil mr-3" })]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticStyle: { color: "white" },
+                    attrs: { href: _vm.deleteProduct(information) }
+                  },
+                  [_c("i", { staticClass: "fa fa-trash mr-3" })]
+                )
+              ])
+            : _vm._e()
         ])
       ])
     })
@@ -37628,7 +37673,6 @@ var render = function() {
       domProps: { value: _vm.search },
       on: {
         keyup: [
-          _vm.autocomplete,
           function($event) {
             if (
               !("button" in $event) &&
@@ -37637,7 +37681,17 @@ var render = function() {
               return null
             }
             return _vm.reset($event)
-          }
+          },
+          function($event) {
+            if (
+              !("button" in $event) &&
+              _vm._k($event.keyCode, "del", undefined, $event.key, undefined)
+            ) {
+              return null
+            }
+            return _vm.autocomplete($event)
+          },
+          _vm.autocomplete
         ],
         input: function($event) {
           if ($event.target.composing) {
@@ -48735,7 +48789,10 @@ __webpack_require__("./node_modules/es6-promise/dist/es6-promise.js").polyfill()
 window.axios = __webpack_require__("./node_modules/axios/index.js");
 window._ = __webpack_require__("./node_modules/lodash/lodash.js");
 
-window.Laravel = { csrfToken: $('meta[name=csrf-token]').attr("content") };
+window.Laravel = {
+    csrfToken: $('meta[name=csrf-token]').attr("content"),
+    user: $('meta[name=user]').attr("content")
+};
 window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Laravel.csrfToken;
 window.Vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 
@@ -48750,7 +48807,7 @@ Vue.component('count', __webpack_require__("./resources/assets/js/components/Cou
 Vue.component('back-top', __webpack_require__("./resources/assets/js/components/BackTop.vue"));
 
 var app = new Vue({
-  el: '#app'
+    el: '#app'
 });
 
 /***/ }),
