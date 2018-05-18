@@ -4,7 +4,7 @@
         <div v-for="information in all" class="row response-body p-1" >
             <div class="col-lg-12 body">
                 <br>
-                <h4> <b># {{information.title}}</b></h4>
+                <h4> <b>#{{information.id}} {{information.title}}</b></h4>
                 <p> {{information.content | purify}} ...</p>
                 <p v-if="mypost(information)" class="text-right">
                     <a :href="editPost(information)" style="color:white">

@@ -37573,7 +37573,13 @@ var render = function() {
         _c("div", { staticClass: "col-lg-12 body" }, [
           _c("br"),
           _vm._v(" "),
-          _c("h4", [_c("b", [_vm._v("# " + _vm._s(information.title))])]),
+          _c("h4", [
+            _c("b", [
+              _vm._v(
+                "#" + _vm._s(information.id) + " " + _vm._s(information.title)
+              )
+            ])
+          ]),
           _vm._v(" "),
           _c("p", [
             _vm._v(" " + _vm._s(_vm._f("purify")(information.content)) + " ...")
